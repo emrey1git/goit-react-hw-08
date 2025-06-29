@@ -1,41 +1,44 @@
-import { useEffect } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { Routes, Route } from "react-router-dom";
+import Layout from "./Layout";
+import HomePage from "./pages/HomePage";
+import RegistrationPage from "./pages/RegistrationPage";
+import LoginPage from "./pages/LoginPage";
+import ContactsPage from "./pages/ContactsPage";
+import PrivateRoute from "./components/PrivateRoute";
+import RestrictedRoute from "./components/RestrictedRoute";
 
-import ContactForm from "./components/ContactForm/ContactForm";
-import ContactList from "./components/ContactList/ContactList";
-import SearchBox from "./components/SearchBox/SearchBox"; 
-import { selectContacts } from "./redux/contactsSlice";
-import { addContact, deleteContact, fetchContacts } from "./redux/contactsOps";
-import { selectFilter, setFilter } from "./redux/filtersSlice"; 
-import "./App.css"; 
-
-export default function App() {
-  const contacts = useSelector(selectContacts);
-  const filter = useSelector(selectFilter);
-  const dispatch = useDispatch();
-
-  useEffect(() => {
-    dispatch(fetchContacts());
-  }, [dispatch]);
-
-  const handleAddContact = (contact) => {
-    dispatch(addContact(contact));
-  };
-
-  const handleDeleteContact = (id) => {
-    dispatch(deleteContact(id));
-  };
-
-  const handleFilterChange = (value) => {
-    dispatch(setFilter(value));
-  };
-
+function App() {
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm onAddContact={handleAddContact} />
-      <SearchBox filter={filter} onChange={handleFilterChange} />
-      <ContactList contacts={contacts} onDelete={handleDeleteContact} />
-    </div>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+        <Route index element={<HomePage />} />
+        <Route
+          path="register"
+          element={
+            <RestrictedRoute>
+              <RegistrationPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="login"
+          element={
+            <RestrictedRoute>
+              <LoginPage />
+            </RestrictedRoute>
+          }
+        />
+        <Route
+          path="contacts"
+          element={
+            <PrivateRoute>
+              <ContactsPage />
+            </PrivateRoute>
+          }
+        />
+      </Route>
+    </Routes>
   );
 }
+
+export default App;

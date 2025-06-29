@@ -14,7 +14,4 @@ const filtersSlice = createSlice({
 
 export const { setFilter } = filtersSlice.actions;
 
-// Selector fonksiyonu - state içinden filtreyi seçmek için
-export const selectFilter = (state) => state.filters.filter;
-
 export default filtersSlice.reducer;
