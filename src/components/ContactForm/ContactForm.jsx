@@ -1,8 +1,6 @@
 import { useFormik } from "formik";
-import * as Yup from "yup";
 import { useDispatch } from "react-redux";
 import { addContact } from "../../redux/contacts/operations";
-
 import styles from "./ContactForm.module.css";
 
 export default function ContactForm() {
@@ -13,10 +11,22 @@ export default function ContactForm() {
       name: "",
       number: "",
     },
-    validationSchema: Yup.object({
-      name: Yup.string().min(3).max(50).required("İsim zorunludur"),
-      number: Yup.string().min(3).max(50).required("Numara zorunludur"),
-    }),
+    validate: (values) => {
+      const errors = {};
+      if (!values.name) {
+        errors.name = "İsim zorunludur";
+      } else if (values.name.length < 3) {
+        errors.name = "En az 3 karakter olmalı";
+      }
+
+      if (!values.number) {
+        errors.number = "Numara zorunludur";
+      } else if (values.number.length < 3) {
+        errors.number = "Geçerli bir numara girin";
+      }
+
+      return errors;
+    },
     onSubmit: (values, { resetForm }) => {
       dispatch(addContact(values));
       resetForm();

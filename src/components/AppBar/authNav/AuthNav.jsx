@@ -1,13 +1,19 @@
 import { NavLink } from "react-router-dom";
+import styles from "./AuthNav.module.css";
 
 const AuthNav = () => {
   return (
-    <div>
-      <NavLink to="/login" style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : 'normal' })}>
+    <div className={styles.authNav}>
+      <NavLink
+        to="/login"
+        className={({ isActive }) => isActive ? styles.active : styles.link}
+      >
         Login
       </NavLink>
-      {" | "}
-      <NavLink to="/register" style={({ isActive }) => ({ fontWeight: isActive ? 'bold' : 'normal' })}>
+      <NavLink
+        to="/register"
+        className={({ isActive }) => isActive ? styles.active : styles.link}
+      >
         Register
       </NavLink>
     </div>

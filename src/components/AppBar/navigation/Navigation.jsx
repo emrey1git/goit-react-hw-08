@@ -1,24 +1,18 @@
 import { NavLink } from "react-router-dom";
-
-const activeStyle = {
-  fontWeight: "bold",
-  color: "blue",
-  textDecoration: "underline",
-};
+import styles from "./Navigation.module.css";
 
 const Navigation = () => {
   return (
-    <nav>
+    <nav className={styles.nav}>
       <NavLink
         to="/"
-        style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        className={({ isActive }) => (isActive ? styles.active : styles.link)}
       >
         Home
       </NavLink>
-      {" | "}
       <NavLink
         to="/contacts"
-        style={({ isActive }) => (isActive ? activeStyle : undefined)}
+        className={({ isActive }) => (isActive ? styles.active : styles.link)}
       >
         Contacts
       </NavLink>
